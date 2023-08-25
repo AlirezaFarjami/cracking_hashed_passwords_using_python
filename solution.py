@@ -6,7 +6,7 @@ def generate_password_dict(limit):
     password_dict = {}
     for i in range(limit + 1):
         # Hash the password and store it as key, with the original password as value
-        password_dict[hashlib.sha256(str(i).encode('utf-8')).hexdigest()] = str(i)
+        password_dict[hashlib.sha1(str(i).encode('utf-8')).hexdigest()] = str(i)
     return password_dict
 
 # Function to crack hashed passwords and write results to an output file
@@ -31,7 +31,7 @@ def crack_passwords(input_filename, output_filename, password_dict):
             # Look up the original password in the password dictionary
             decrypted_pw = password_dict.get(hash_pw, 'password not found')
             # Create a tuple with original hash, input hash, and decrypted password
-            mytuple = (line[0], line[1], decrypted_pw)
+            mytuple = (line[0], decrypted_pw)
             # Write the tuple to the output CSV file
             result_writer.writerow(mytuple)
 
